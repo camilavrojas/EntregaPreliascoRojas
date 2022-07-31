@@ -1,9 +1,9 @@
 from datetime import datetime
-from django.http import HttpResponse
-from django.template import loader
 from django.shortcuts import redirect, render
 from blog.forms import Buscar, Formulario
 from .models import Publicacion
+from django.views.generic.edit import DeleteView
+from django.views.generic import DetailView
 
 
 def inicio(request):
@@ -32,9 +32,6 @@ def crear(request):
             )
             publicacion.save()
 
-            #publicaciones = Publicacion.objects.all()
-            #return render(request, 'publicaciones.html', {'publicaciones': publicaciones})
-
             return redirect('publicaciones')
 
         else:
@@ -44,7 +41,6 @@ def crear(request):
     formulario = Formulario()
 
     return render(request, 'crear.html', {'form': formulario} )
-
 
 
 def publicaciones(request):
@@ -81,12 +77,12 @@ def editar(request, id):
     return render(request, 'editar.html', {'form': formulario,'publicacion': publicacion } )
  
 
-def eliminar(request, id):
-    publicacion = Publicacion.objects.get(id=id)
-    publicacion.delete()
-    return redirect('publicaciones')
-    
+class Eliminar(DeleteView):
+    model=Publicacion
+    template_name= 'eliminar.html'
+    success_url='/publicaciones'
 
-def mostrar(request, id):
-    publicacion = Publicacion.objects.get(id=id)
-    return render(request, 'mostrar.html', {'publicacion': publicacion} )
+
+class Mostrar(DetailView):
+    model=Publicacion
+    template_name= 'mostrar.html'

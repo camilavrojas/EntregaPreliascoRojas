@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Eliminar Publicación</title>
+{% endblock title %}
+
+{% block h1 %}
+<div class="site-heading">
+    <h1>Eliminar</h1>
+</div>
+{% endblock h1 %}
+
+{% block container %}
+
+<p>
+    <a href={% url 'publicaciones' %} >Volver</a>
+</p>
+
+<p>
+    <form action={% url 'eliminar_publicacion' object.id  %} method="post">
+        {% csrf_token %}
+        Desea eliminar la publicación?
+        <button>Confirmar</button>
+    </form>
+</p>
+
+
+
+{% endblock container %}
