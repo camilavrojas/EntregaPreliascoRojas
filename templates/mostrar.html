@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Publicacion</title>
+{% endblock title %}
+
+{% block h1 %}
+<div class="site-heading">
+    <h1>Publicacion</h1>
+</div>
+{% endblock h1 %}
+
+{% block container %}
+
+<p>
+    <a href={% url 'publicaciones' %} >Volver</a>
+</p>
+
+
+<p>
+    <ul>
+        <li>
+            {{publicacion.titulo}} 
+        </li>
+        <li>
+            {{publicacion.subtitulo}} 
+        </li>
+        <li>
+            {{publicacion.contenido}} 
+        </li>
+        <li>
+            {{publicacion.autor}} 
+        </li>
+        <li>
+            {{publicacion.fecha_creacion}} 
+        </li>
+    </ul>
+</p>
+
+{% endblock container %}

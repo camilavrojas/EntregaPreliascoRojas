@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from blog.forms import Buscar, Formulario
 from .models import Publicacion
 
@@ -9,16 +9,6 @@ from .models import Publicacion
 def inicio(request):
     return render(request, 'index.html')
 
-def template(request):
-
-    #template = loader.get_template('index.html')
-    titulo1 = Publicacion(titulo="hola")
-    titulo2 = Publicacion(titulo="como")
-    titulo3 = Publicacion(titulo="estas")
-
-    #render = template.render({'lista_objetos': [titulo1,titulo2, titulo3]})
-    #return HttpResponse(render)
-    return render(request,'mi_template.html', {'lista_objetos': [titulo1,titulo2, titulo3]})
 
 def acerca(request):
     return render(request, 'acerca.html')
@@ -42,9 +32,10 @@ def crear(request):
             )
             publicacion.save()
 
-            publicaciones = Publicacion.objects.all()
+            #publicaciones = Publicacion.objects.all()
+            #return render(request, 'publicaciones.html', {'publicaciones': publicaciones})
 
-            return render(request, 'publicaciones.html', {'publicaciones': publicaciones})
+            return redirect('publicaciones')
 
         else:
             return render(request, 'crear.html', {'form': form} )
@@ -67,3 +58,35 @@ def publicaciones(request):
 
     return render(request, 'publicaciones.html', {'publicaciones': publicaciones, 'form': form})
 
+def editar(request, id):
+    publicacion = Publicacion.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = Formulario(request.POST)
+        if form.is_valid():    
+            publicacion.titulo = form.cleaned_data.get('titulo')
+            publicacion.subtitulo = form.cleaned_data.get('subtitulo')
+            publicacion.contenido = form.cleaned_data.get('contenido')
+            publicacion.autor = form.cleaned_data.get('autor')
+            publicacion.fecha_creacion = form.cleaned_data.get('fecha_creacion')
+            publicacion.save()
+
+            return redirect('publicaciones')
+
+        else:
+            return render(request, 'editar.html', {'form': form, 'publicacion': publicacion })
+
+    formulario = Formulario(initial={'titulo': publicacion.titulo, 'subtitulo': publicacion.subtitulo, 'contenido': publicacion.contenido , 'autor': publicacion.autor, 'fecha_creacion':publicacion.fecha_creacion} )
+
+    return render(request, 'editar.html', {'form': formulario,'publicacion': publicacion } )
+ 
+
+def eliminar(request, id):
+    publicacion = Publicacion.objects.get(id=id)
+    publicacion.delete()
+    return redirect('publicaciones')
+    
+
+def mostrar(request, id):
+    publicacion = Publicacion.objects.get(id=id)
+    return render(request, 'mostrar.html', {'publicacion': publicacion} )

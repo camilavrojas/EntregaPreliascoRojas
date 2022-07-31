@@ -28,7 +28,12 @@
     {% if publicaciones %}  
         <ul>
             {% for publicacion in publicaciones %}
-            <li>{{publicacion}} </li>
+            <li>
+                {{publicacion}} 
+                <a href={% url 'mostrar_publicacion' publicacion.id %}>Mostrar</a>
+                <a href={% url 'editar_publicacion' publicacion.id %}>Editar</a>
+                <a href={% url 'eliminar_publicacion' publicacion.id %}>Eliminar</a>
+            </li>
             {% endfor %}
         </ul>
     {% else %}
