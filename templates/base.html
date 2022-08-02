@@ -34,10 +34,10 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href={% url 'acerca' %}>Acerca de</a></li>
                         {% if request.user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href={% url 'perfil' %}>
-                            {% if request.user.masdatos.avatar %}
-                            <img src={{request.user.masdatos.avatar.url}} alt="avatar" height='30px'>
+                            {% comment %} {% if request.user.masdatos.avatar %}
+                            <img src={{request.user.masdatos.avatar.url}} alt="avatar" height='30px'> {% endcomment %}
                             {{request.user.username}}
-                            {% endif %}
+                            {% comment %} {% endif %} {% endcomment %}
                         </a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href={% url 'cerrar_sesion' %}>Cerrar Sesión</a></li>
                         {% else %}

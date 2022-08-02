@@ -4,10 +4,7 @@ from blog.forms import Formulario, Buscar
 from .models import Publicacion
 from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic import DetailView
-from django.contrib.auth.decorators import login_required
 
-
-@login_required
 def inicio(request):
     return render(request, 'index.html')
 
