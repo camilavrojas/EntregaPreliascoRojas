@@ -1,0 +1,9 @@
+from pyexpat import model
+from urllib import request
+from django.db import models
+from django.contrib.auth.models import User
+
+class MasDatos(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatares', null=True, blank=True)
+

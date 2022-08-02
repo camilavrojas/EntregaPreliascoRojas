@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Editar Perfil</title>
+{% endblock title %}
+
+
+{% block container %}
+
+<h1>Editar Perfil</h1>
+<p>
+    <form action={% url 'editar_perfil' %} method="post" enctype='multipart/form-data' >
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <button>Editar</button> 
+    </form>
+</p>
+
+<p>
+    <a href={% url 'perfil' %}>Volver</a>
+</p>
+
+{% endblock container %}
